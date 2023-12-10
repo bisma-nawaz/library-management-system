@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import User from './User';
-import Student from './Student';
-import Staff from './Staff';
+//import User from './User';
+//import Student from './Student';
+//import Staff from './Staff';
 import { v4 as uuidv4 } from 'uuid';
 
 const checkoutSchema = new mongoose.Schema({

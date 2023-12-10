@@ -1,4 +1,4 @@
-import Book from '../models/Book.js'; 
+import Book from '../models/Book.js';
 
 // add new book
 export const addBook = async (req, res) => {
@@ -77,4 +77,3 @@ export const deleteBookByISBN = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
-  

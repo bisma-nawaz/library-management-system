@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import DeleteBook from './deletebook'; 
+import DeleteBook from './deletebook';
+import CheckoutBook from './checkout'; 
 
 
 const BookList = ({ onUpdate, onDelete, canEdit }) => {
@@ -35,6 +36,7 @@ const BookList = ({ onUpdate, onDelete, canEdit }) => {
               <DeleteBook bookISBN={book.bookISBN} onBookDeleted={handleBookDeleted} />
             </>
           )}
+          <CheckoutBook bookISBN={book.bookISBN} />
         </div>
       ))}
     </div>

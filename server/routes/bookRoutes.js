@@ -7,6 +7,11 @@ import {
   searchBooksByISBN
 } from '../controllers/bookController.js';
 
+import {
+  checkOutBookByISBN,
+  returnBookByISBN
+} from '../controllers/transactionController.js';
+
 const router = express.Router();
 
 
@@ -16,5 +21,7 @@ router.get('/', getBooks);
 router.delete('/:isbn', deleteBookByISBN);
 router.put('/:isbn', updateBookByISBN);
 router.get('/search', searchBooksByISBN);
+router.put('/checkout/:isbn/:studentId/:staffId', checkOutBookByISBN);
+router.put('/return/:isbn', returnBookByISBN);
 
 export default router; 

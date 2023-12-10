@@ -19,7 +19,7 @@ import ServiceList from './serviceList';
 import SubmitFeedbackForm from './submitfeedbackform';
 import SearchBooks from './searchBook';
 import SignoutButton from './signout';
-
+import CheckoutBook from './checkout';
 
 
 const StudentDashboard = () => {
@@ -33,6 +33,12 @@ const StudentDashboard = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
 
+  // New state for checkout
+  // const [studentId, setStudentId] = useState('');
+  // const [staffId, setStaffId] = useState('');
+  const [selectedBook, setSelectedBook] = useState(null);
+  //const [isCheckoutVisible, setIsCheckoutVisible] = useState(false);
+  //const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
 
   const fetchBooks = async () => {
@@ -68,9 +74,25 @@ const StudentDashboard = () => {
   const handleSearchResults = (results) => {
     // results containg the searched results 
       setSearchResults(results);
+  };
 
+  const handleCheckoutClick = (bookISBN) => {
+    setSelectedBook(bookISBN);
+    //setIsCheckoutVisible(true); // Set the selected book on checkout button click
   };
   
+  // const handleReturn = async (isbn) => {
+  //   try {
+  //     // Make a PUT request to return the book by ISBN
+  //     await axios.put(`http://localhost:3000/api/books/return/${isbn}`);
+  //     // Perform any necessary state updates or alerts upon successful return
+  //     // Example: Fetch updated book list or show a success message
+  //     fetchBooks(); // Refresh book list after return
+  //   } catch (err) {
+  //     // Handle errors, e.g., show an error message
+  //     console.error('Error returning book:', err);
+  //   }
+  // };
 
   return (
     <div>
@@ -89,9 +111,24 @@ const StudentDashboard = () => {
       <button style={{ marginBottom: '10px', marginLeft: '10px', marginTop: '50px'}} onClick={toggleFeedbackForm}>
         Provide Feedback
       </button>
-      <SignoutButton /> 
+      <SignoutButton />
+
       {error.books && <p>{error.books}</p>}
-      {showBooks && <BookList books={books} canEdit={false} />}
+      {showBooks && (
+        <BookList
+          books={books}
+          canEdit={false}
+          renderActions={(book) => (
+            <div>
+              <button onClick={() => handleCheckoutClick(book.bookISBN)}>Checkout Book</button>
+              {selectedBook === book.bookISBN && (
+                <CheckoutBook bookISBN={selectedBook} />
+              )}
+            </div>
+          )}
+        />
+      )}
+
       {error.services && <p>{error.services}</p>}
       {showServices && <ServiceList services={services} />}
       {showFeedbackForm && <SubmitFeedbackForm onClose={toggleFeedbackForm} />}
